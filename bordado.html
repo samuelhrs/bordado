@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bordado</title>
+    <link rel="shortcut icon" href="embroidery.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 50px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .loading{
+            width: 35px;
+            animation: spin 2s infinite linear;
+        }
+        @keyframes spin {
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Veja o valor do bordado</h1>
+<form>
+    <label for="tipo">Tamanho do Bastidor:</label>
+    <select id="bastidor" required>
+        <option value="bastidorPequeno">Pequeno - 12cm</option>
+        <option value="bastidorMedio">Médio - 16 cm</option>
+        <option value="bastidorGrande">Grande - 20 cm</option>
+    </select>
+    <label for="tipo">Valor Feltro:</label>
+    <select id="feltro" required>
+        <option value="feltroPequeno">Pequeno - 12cm</option>
+        <option value="feltroMedio">Médio - 16cm</option>
+        <option value="feltroGrande">Grande - 20cm</option>
+    </select>
+    <label for="tipo">Valor Cordão:</label>
+    <select id="cordao" required>
+        <option value="cordaoPequeno">Pequeno - 12cm</option>
+        <option value="cordaoMedio">Médio - 16cm</option>
+        <option value="cordaoGrande">Grande - 20cm</option>
+    </select>
+    <label for="tipo">Valor Algodão Cru:</label>
+    <input type="number" id="algodao">
+
+    <label for="tipo">Quantidade de Linha (metros):</label>
+    <input type="number" id="linha" placeholder="digite a quantidade de linha gasta">
+
+    <label for="tipo">Barbante:</label>
+    <input type="number" id="barbante" placeholder="digite a quantidade de barbante gasto">
+
+    <label for="tipo">Papel Seda:</label>
+    <input type="text" id="papel" placeholder="digite a quantidade de folha gasta">
+
+    <label for="tipo">Adesivo:</label>
+    <input type="number" id="adesivo" placeholder="digite a quantidade de adesivo gasto">
+    
+    <label for="tipo">Hora Total do Bordado:</label>
+    <input type="number" id="hora" placeholder="digite a quantidade de horas trabalhadas">
+
+    <button onclick="calcularTotal()">Calcular Total</button>
+</form>
+
+<script>
+    const button = document.querySelector('button');
+
+    function calcularTotal() {
+        // Valores fixos para tamanhos
+        const valores = {
+            bastidorPequeno: 13,
+            bastidorMedio: 14,
+            bastidorGrande: 16, 
+            
+            feltroPequeno: 0.4,
+            feltroMedio: 0.8,
+            feltroGrande: 1.07,
+
+            cordaoPequeno: 0.15,
+            cordaoMedio: 0.2,
+            cordaoGrande: 0.25
+        };
+
+        // Obter seleções
+        const bastidor = document.getElementById("bastidor").value;
+        const feltro = document.getElementById("feltro").value;
+        const cordao = document.getElementById("cordao").value;
+
+        // Obter entradas numéricas
+        const algodao = parseFloat(document.getElementById("algodao").value) || 0;
+        const linha = parseFloat(document.getElementById("linha").value) || 0;
+        const barbante = parseFloat(document.getElementById("barbante").value) || 0;
+        const papel = parseFloat(document.getElementById("papel").value) || 0;
+        const adesivo = parseFloat(document.getElementById("adesivo").value) || 0;
+        const hora = parseFloat(document.getElementById("hora").value) || 0;
+
+        // Valor por metro de linha, barbante, papel, adesivo (você pode ajustar)
+        const precoPorMetroLinha = 0.5;
+        const precoPorMetroBarbante = 0.15;
+        const precoPorFolhaPapel = 0.25;
+        const precoPorAdesivo = 0.10;
+        const valorHora = 7.30;
+
+        // Cálculo
+        const total =
+            (valores[bastidor] || 0) +
+            (valores[feltro] || 0) +
+            (valores[cordao] || 0) +
+            algodao +
+            (linha * precoPorMetroLinha) +
+            (barbante * precoPorMetroBarbante) +
+            (papel * precoPorFolhaPapel) +
+            (adesivo * precoPorAdesivo) +
+            (hora * valorHora);
+
+        const insumos = total * 1.05;
+
+          alert(
+            "Custo base: R$ " + total.toFixed(2) + "\n" +
+            "Total com 20% adicional: R$ " + insumos.toFixed(2)
+        );
+    }
+</script>
+</body>
+</html>
