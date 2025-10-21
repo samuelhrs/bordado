@@ -82,7 +82,9 @@
         <option value="cordaoGrande">Grande - 20cm</option>
     </select>
     <label for="tipo">Valor Algodão Cru:</label>
-    <input type="number" id="algodao">
+    <select required>
+        <option>R$0,63</option>
+    </select>
 
     <label for="tipo">Quantidade de Linha (metros):</label>
     <input type="number" id="linha" placeholder="digite a quantidade de linha gasta">
@@ -99,13 +101,14 @@
     <label for="tipo">Hora Total do Bordado:</label>
     <input type="number" id="hora" placeholder="digite a quantidade de horas trabalhadas">
 
-    <button onclick="calcularTotal()">Calcular Total</button>
+    <button onclick="calcularTotal(event)">Calcular Total</button>
 </form>
 
 <script>
     const button = document.querySelector('button');
 
-    function calcularTotal() {
+    function calcularTotal(event) {
+        event.preventDefault();
         // Valores fixos para tamanhos
         const valores = {
             bastidorPequeno: 13,
@@ -118,7 +121,9 @@
 
             cordaoPequeno: 0.15,
             cordaoMedio: 0.2,
-            cordaoGrande: 0.25
+            cordaoGrande: 0.25,
+
+            algodao: 0.63
         };
 
         // Obter seleções
@@ -127,7 +132,6 @@
         const cordao = document.getElementById("cordao").value;
 
         // Obter entradas numéricas
-        const algodao = parseFloat(document.getElementById("algodao").value) || 0;
         const linha = parseFloat(document.getElementById("linha").value) || 0;
         const barbante = parseFloat(document.getElementById("barbante").value) || 0;
         const papel = parseFloat(document.getElementById("papel").value) || 0;
@@ -146,7 +150,7 @@
             (valores[bastidor] || 0) +
             (valores[feltro] || 0) +
             (valores[cordao] || 0) +
-            algodao +
+            valores.algodao +
             (linha * precoPorMetroLinha) +
             (barbante * precoPorMetroBarbante) +
             (papel * precoPorFolhaPapel) +
