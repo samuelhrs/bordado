@@ -78,13 +78,17 @@
     <label for="tipo">Valor Cordão:</label>
     <select id="cordao" required>
         <option value="cordaoPequeno">Pequeno - 12cm</option>
-        <option value="cordaoMedio">Médio - 16cm</option>
+        <option value="cordaoMedio">Médio - 15cm</option>
         <option value="cordaoGrande">Grande - 20cm</option>
     </select>
     <label for="tipo">Valor Algodão Cru:</label>
-    <select required>
-        <option>R$0,63</option>
-    </select>
+    <input type="number" id="algodao" placeholder="digite a quantidade de algodão cru">
+
+    <label for="tipo">Cartão de Visita:</label>
+    <input type="number" id="visita" placeholder="digite a quantidade de cartão de visita">
+
+    <label for="tipo">Flyer:</label>
+    <input type="number" id="flyer" placeholder="digite a quantidade de flyer">
 
     <label for="tipo">Linha (metros):</label>
     <input type="number" id="linha" placeholder="digite a quantidade de linha gasta">
@@ -111,57 +115,66 @@
         event.preventDefault();
         // Valores fixos para tamanhos
         const valores = {
-            bastidorPequeno: 13,
-            bastidorMedio: 14,
-            bastidorGrande: 16, 
+            bastidorPequeno: 15,
+            bastidorMedio: 17,
+            bastidorGrande: 21, 
             
-            feltroPequeno: 0.4,
-            feltroMedio: 0.8,
-            feltroGrande: 1.07,
+            //feltroPequeno: 0.4,
+            //feltroMedio: 0.8,
+            //feltroGrande: 1.07,
 
-            cordaoPequeno: 0.15,
-            cordaoMedio: 0.2,
-            cordaoGrande: 0.25,
-
-            algodao: 0.63
+            cordaoPequeno: 0.25,
+            cordaoMedio: 0.31,
+            cordaoGrande: 0.41
         };
 
         // Obter seleções
         const bastidor = document.getElementById("bastidor").value;
-        const feltro = document.getElementById("feltro").value;
+        //const feltro = document.getElementById("feltro").value;
         const cordao = document.getElementById("cordao").value;
 
         // Obter entradas numéricas
         const linha = parseFloat(document.getElementById("linha").value) || 0;
+        const cartaoVisita = parseFloat(document.getElementById("visita").value) || 0;
+        const flyer = parseFloat(document.getElementById("flyer").value) || 0;
+        const algodao = parseFloat(document.getElementById("algodao").value) || 0;
         const barbante = parseFloat(document.getElementById("barbante").value) || 0;
         const papel = parseFloat(document.getElementById("papel").value) || 0;
         const adesivo = parseFloat(document.getElementById("adesivo").value) || 0;
         const hora = parseFloat(document.getElementById("hora").value) || 0;
 
         // Valor por metro de linha, barbante, papel, adesivo (você pode ajustar)
-        const precoPorMetroLinha = 0.5;
-        const precoPorMetroBarbante = 0.15;
-        const precoPorFolhaPapel = 0.25;
-        const precoPorAdesivo = 0.10;
+        const precoPorMetroLinha = 0.43;
+        const precoPorMetroBarbante = 0.13;
+        const precoPorFolhaPapel = 0.21;
+        const precoPorAdesivo = 0.05;
+        const precoAlgodao = 0.63;
+        const precoCartaoVisita = 0.36;
+        const precoFlyer = 0.24;
         const valorHora = 7.30;
-
+        const alca = 0.16;
+        
         // Cálculo
         const total =
             (valores[bastidor] || 0) +
-            (valores[feltro] || 0) +
+           // (valores[feltro] || 0) +
             (valores[cordao] || 0) +
-            valores.algodao +
             (linha * precoPorMetroLinha) +
             (barbante * precoPorMetroBarbante) +
             (papel * precoPorFolhaPapel) +
             (adesivo * precoPorAdesivo) +
+            (algodao * precoAlgodao) +
+            (cartaoVisita * precoCartaoVisita) +
+            (flyer * precoFlyer) +
+            alca + 
             (hora * valorHora);
 
-        const insumos = total * 1.05;
+        const insumos = total + (total * 0.1) + (total * 0.3);
+        
 
           alert(
             "Custo base: R$ " + total.toFixed(2) + "\n" +
-            "Total com 20% adicional: R$ " + insumos.toFixed(2)
+            "Total com 30% lucro e 10% insumos: R$ " + insumos.toFixed(2)
         );
     }
 </script>
