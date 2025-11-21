@@ -166,31 +166,29 @@
         const linha = parseFloat(document.getElementById("linha").value) || 0;
         const cartaoVisita = parseFloat(document.getElementById("visita").value) || 0;
         const flyer = parseFloat(document.getElementById("flyer").value) || 0;
-        const barbante = parseFloat(document.getElementById("barbante").value) || 0;
         const papel = parseFloat(document.getElementById("papel").value) || 0;
         const adesivo = parseFloat(document.getElementById("adesivo").value) || 0;
         const hora = parseFloat(document.getElementById("hora").value) || 0;
-        const frete = parseFloat(document.getElementById("frete").value) || 0;
         const caixa = parseFloat(document.getElementById("caixa").value) || 0;
-        const etiquetaEnvio = parseFloat(document.getElementById("etiqueta").value) || 0;
-        const etiquetaM = parseFloat(document.getElementById("etiquetaMarca").value) || 0;
+        const etiquetaC = parseFloat(document.getElementById("etiquetaCorreio").value) || 0;
+        const etiquetaM = parseFloat(document.getElementById("etiqueta").value) || 0;
         const passagemOnibus = parseFloat(document.getElementById("passagemOnibus").value) || 0;
         const layout = parseFloat(document.getElementById("layout").value) || 0;
         const depreciacao = parseFloat(document.getElementById("depreciacao").value)  || 0;
         const custoFixo = parseFloat(document.getElementById("custoFixo").value) || 0;
+        const cordaoA = parseFloat(document.getElementById("cordaoAlca").value) || 0;
         
 
-        // Valor por metro de linha, barbante, papel, adesivo (você pode ajustar)
+        // Valor por metro de linha, papel, adesivo (você pode ajustar)
         const precoPorMetroLinha = 0.43;
-        const cordaoAlca = 0.20;
         const precoPorFolhaPapel = 0.21;
         const precoPorAdesivo = 0.02;
         const precoCartaoVisita = 0.36;
         const precoFlyer = 0.40;
         const valorHora = 6.90;
-        const alca = 0.20 * cordaoAlca;
+        const alca = 0.20;
         const valorCaixa = 2.10;
-        const etiqueta = 0.75;
+        const etiquetaCorreio = 0.75;
         const etiquetaMarca = 0.26;
         
         // Cálculo
@@ -199,15 +197,14 @@
             (valores[cordao] || 0) +
             (valores[algodao] || 0) +
             (linha * precoPorMetroLinha) +
-            (barbante * precoPorMetroBarbante) +
             (papel * precoPorFolhaPapel) +
             (adesivo * precoPorAdesivo) +
             (cartaoVisita * precoCartaoVisita) +
             (flyer * precoFlyer) +
-            alca + 
+            (cordaoA * alca) + 
             (hora * valorHora) + 
             (caixa * valorCaixa) +
-            (etiquetaEnvio * etiqueta) +
+            (etiquetaC * etiquetaCorreio) +
             (etiquetaM * etiquetaMarca) +
             passagemOnibus +
             layout +
@@ -221,7 +218,7 @@
           alert(
             "Custo base: R$ " + total.toFixed(2) + "\n" +
             "Total com 10% (tinta, cola, impermeabilizante, etc): R$ " + insumos.toFixed(2) +  "\n" + 
-            "Total com lucro de 30%: R$ " + (insumos + lucro).toFixed(2)
+            "Total final com 30% de lucro: R$ " + (insumos + lucro).toFixed(2)
 
         );
     }
