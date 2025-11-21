@@ -63,53 +63,72 @@
 
 <h1>Veja o valor do bordado</h1>
 <form>
-    <label for="tipo">Tamanho do Bastidor:</label>
+    <label for="tipo">Bastidor ou Moldura:</label>
     <select id="bastidor" required>
-        <option value="bastidorPequeno">Pequeno - 12cm</option>
-        <option value="bastidorMedio">Médio - 15 cm</option>
-        <option value="bastidorGrande">Grande - 20 cm</option>
+        <option value="bastidorPequeno">Bastidor - 12cm</option>
+        <option value="bastidorMedio">Bastidor - 15 cm</option>
+        <option value="bastidorGrande">Bastidor - 20 cm</option>
+        <option value="molduraPequena">Moldura - 20 cm</option>
+        <option value="molduraGrande">Moldura - 25 cm</option>
     </select>
-    <!--<label for="tipo">Valor Feltro:</label>
-    <select id="feltro" required>
-        <option value="feltroPequeno">Pequeno - 12cm</option>
-        <option value="feltroMedio">Médio - 16cm</option>
-        <option value="feltroGrande">Grande - 20cm</option>
-    </select>-->
-    <label for="tipo">Valor Cordão:</label>
+
+        <label for="tipo">Algodão:</label>
+    <select id="algodao" required>
+        <option value="algodaoBP">Algodão Bastidor - 12cm</option>
+        <option value="algodaoBM">Algodão Bastidor - 15 cm</option>
+        <option value="algodaoBG">Algodão Bastidor - 20 cm</option>
+        <option value="algodaoMP">Algodão Moldura - 20 cm</option>
+        <option value="algodaoMG">Algodão Moldura - 25 cm</option>
+    </select>
+
+    <label for="tipo">Linha (metros):</label>
+    <input type="number" id="linha" placeholder="digite a quantidade de linha gasta">
+
+    <label for="tipo">Cordão para Alça:</label>
+    <input type="number" id="cordaoAlca" value="1">
+
+    <label for="tipo">Cordão de Acabamento:</label>
     <select id="cordao" required>
         <option value="cordaoPequeno">Pequeno - 12cm</option>
         <option value="cordaoMedio">Médio - 15cm</option>
         <option value="cordaoGrande">Grande - 20cm</option>
     </select>
-    <label for="tipo">Algodão Cru:</label>
-    <input type="number" id="algodao" placeholder="digite a quantidade de algodão cru">
+
+    <label for="tipo">Etiqueta da Marca:</label>
+    <input type="number" id="etiqueta" value="1">
+
+    <label for="tipo">Papel Seda:</label>
+    <input type="number" id="papel" placeholder="digite a quantidade de folha gasta">
+
+    <label for="tipo">Adesivo:</label>
+    <input type="number" id="adesivo" placeholder="digite a quantidade de adesivo gasto">
 
     <label for="tipo">Cartão de Visita:</label>
     <input type="number" id="visita" placeholder="digite a quantidade de cartão de visita">
 
-    <label for="tipo">Flyer:</label>
+    <label for="tipo">Cuidados com o Bordado:</label>
     <input type="number" id="flyer" placeholder="digite a quantidade de flyer">
-
-    <label for="tipo">Linha (metros):</label>
-    <input type="number" id="linha" placeholder="digite a quantidade de linha gasta">
-
-    <label for="tipo">Barbante (metros):</label>
-    <input type="number" id="barbante" placeholder="digite a quantidade de barbante gasto">
-
-    <label for="tipo">Papel Seda:</label>
-    <input type="text" id="papel" placeholder="digite a quantidade de folha gasta">
-
-    <label for="tipo">Adesivo:</label>
-    <input type="number" id="adesivo" placeholder="digite a quantidade de adesivo gasto">
-    
-    <label for="tipo">Hora Total do Bordado:</label>
-    <input type="number" id="hora" placeholder="digite a quantidade de horas trabalhadas">
 
     <label for="tipo">Caixa - Correio:</label>
     <input type="number" id="caixa" placeholder="digite a quantidade de caixas usadas">
 
-    <label for="tipo">Digite o Valor do Frete:</label>
-    <input type="number" id="frete" placeholder="digite o valor do frete">
+    <label for="tipo">Etiqueta - Correio:</label>
+    <input type="number" id="etiquetaCorreio" placeholder="digite a quantidade de etiquetas usadas">
+
+    <label for="tipo">Passagem de Ônibus:</label>
+    <input type="number" id="passagemOnibus" placeholder="digite o valor da passagem">
+
+    <label for="tipo">Criação de Layout:</label>
+    <input type="number" id="layout" value="10">
+
+    <label for="tipo">Depreciação de Material:</label>
+    <input type="number" id="depreciacao" value="7.15">
+
+    <label for="tipo">Custo Fixo:</label>
+    <input type="number" id="custoFixo" value="20">
+
+    <label for="tipo">Hora Total do Bordado:</label>
+    <input type="number" id="hora" placeholder="digite a quantidade de horas trabalhadas">
 
     <button onclick="calcularTotal(event)">Calcular Total</button>
 </form>
@@ -121,74 +140,88 @@
         event.preventDefault();
         // Valores fixos para tamanhos
         const valores = {
-            bastidorPequeno: 15,
-            bastidorMedio: 17,
-            bastidorGrande: 21, 
-            
-            //feltroPequeno: 0.4,
-            //feltroMedio: 0.8,
-            //feltroGrande: 1.07,
+            bastidorPequeno: 13,
+            bastidorMedio: 14,
+            bastidorGrande: 15, 
+            molduraPequena: 36.30,
+            molduraGrande: 43.48,
 
-            cordaoPequeno: 0.25,
-            cordaoMedio: 0.31,
-            cordaoGrande: 0.41
+            cordaoPequeno: 0.14,
+            cordaoMedio: 0.17,
+            cordaoGrande: 0.23,
+
+            algodaoBP: 0.31, //12cm 
+            algodaoBM: 0.47, //15cm
+            algodaoBG: 0.78, //20cm
+            algodaoMP: 0.78, //20cm
+            algodaoMG: 1.26, // 25cm
         };
 
         // Obter seleções
         const bastidor = document.getElementById("bastidor").value;
-        //const feltro = document.getElementById("feltro").value;
         const cordao = document.getElementById("cordao").value;
+        const algodao = document.getElementById("algodao").value;
 
         // Obter entradas numéricas
         const linha = parseFloat(document.getElementById("linha").value) || 0;
         const cartaoVisita = parseFloat(document.getElementById("visita").value) || 0;
         const flyer = parseFloat(document.getElementById("flyer").value) || 0;
-        const algodao = parseFloat(document.getElementById("algodao").value) || 0;
         const barbante = parseFloat(document.getElementById("barbante").value) || 0;
         const papel = parseFloat(document.getElementById("papel").value) || 0;
         const adesivo = parseFloat(document.getElementById("adesivo").value) || 0;
         const hora = parseFloat(document.getElementById("hora").value) || 0;
         const frete = parseFloat(document.getElementById("frete").value) || 0;
         const caixa = parseFloat(document.getElementById("caixa").value) || 0;
+        const etiquetaEnvio = parseFloat(document.getElementById("etiqueta").value) || 0;
+        const etiquetaM = parseFloat(document.getElementById("etiquetaMarca").value) || 0;
+        const passagemOnibus = parseFloat(document.getElementById("passagemOnibus").value) || 0;
+        const layout = parseFloat(document.getElementById("layout").value) || 0;
+        const depreciacao = parseFloat(document.getElementById("depreciacao").value)  || 0;
+        const custoFixo = parseFloat(document.getElementById("custoFixo").value) || 0;
         
 
         // Valor por metro de linha, barbante, papel, adesivo (você pode ajustar)
         const precoPorMetroLinha = 0.43;
-        const precoPorMetroBarbante = 0.13;
+        const cordaoAlca = 0.20;
         const precoPorFolhaPapel = 0.21;
-        const precoPorAdesivo = 0.05;
-        const precoAlgodao = 0.63;
+        const precoPorAdesivo = 0.02;
         const precoCartaoVisita = 0.36;
-        const precoFlyer = 0.24;
+        const precoFlyer = 0.40;
         const valorHora = 6.90;
-        const alca = 0.16;
+        const alca = 0.20 * cordaoAlca;
         const valorCaixa = 2.10;
+        const etiqueta = 0.75;
+        const etiquetaMarca = 0.26;
         
         // Cálculo
         const total =
             (valores[bastidor] || 0) +
-           // (valores[feltro] || 0) +
             (valores[cordao] || 0) +
+            (valores[algodao] || 0) +
             (linha * precoPorMetroLinha) +
             (barbante * precoPorMetroBarbante) +
             (papel * precoPorFolhaPapel) +
             (adesivo * precoPorAdesivo) +
-            (algodao * precoAlgodao) +
             (cartaoVisita * precoCartaoVisita) +
             (flyer * precoFlyer) +
             alca + 
             (hora * valorHora) + 
             (caixa * valorCaixa) +
-            frete
-            ;
+            (etiquetaEnvio * etiqueta) +
+            (etiquetaM * etiquetaMarca) +
+            passagemOnibus +
+            layout +
+            depreciacao +
+            custoFixo;
 
-        const insumos = total + (total * 0.1) + (total * 0.3) + (total * 0.2);
+        const insumos = total + (total * 0.1);
+        const lucro = insumos * 0.3;
         
 
           alert(
             "Custo base: R$ " + total.toFixed(2) + "\n" +
-            "Total com 30% lucro 20% cf e dp e 10% insumos: R$ " + insumos.toFixed(2) +  "\n" + 
-            "Total final com frete: R$ " + (insumos + frete).toFixed(2)
+            "Total com 10% (tinta, cola, impermeabilizante, etc): R$ " + insumos.toFixed(2) +  "\n" + 
+            "Total com lucro de 30%: R$ " + (insumos + lucro).toFixed(2)
 
         );
     }
